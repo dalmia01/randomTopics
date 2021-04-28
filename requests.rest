@@ -24,6 +24,12 @@ Content-Type: application/json
 ###
 
 POST http://localhost:3000/signInUser
+Content-Type: application/json
+
+{
+    "username":"dalmia01",
+    "password":"dalmia_01"
+}
 
 ###
 

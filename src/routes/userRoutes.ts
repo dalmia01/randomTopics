@@ -1,6 +1,6 @@
 import * as express from "express";
 
-import { generateJwtAccessToken, generateHashPassword } from "../helpers/helper.functions";
+import { generateJwtAccessToken, generateHashPassword, verifyHashedPassword } from "../helpers/helper.functions";
 import { articles } from "../data/articles";
 import UserModel from "../models/users";
 
@@ -24,10 +24,22 @@ export const signUpUser = async (req: express.Request, res: express.Response) =>
     }
 };
 
-export const signInUser = (req: express.Request, res: express.Response) => {
-    const { username } = req.body;
-    const jwtAccessToken = generateJwtAccessToken(username);
-    res.json({ message: "successfully logged in", jwtAccessToken });
+export const signInUser = async (req: express.Request, res: express.Response) => {
+    const { username, password } = req.body;
+
+    try {
+        const jwtAccessToken = generateJwtAccessToken(username);
+
+        const user = await UserModel.findOne({ username: username });
+
+        if (!user) res.json({ msg: "user does not exist" });
+
+        const isVerifiedHashPassword = await verifyHashedPassword(password, user["password"]);
+
+        if (!isVerifiedHashPassword) res.json({ msg: "wrong credentials" });
+
+        res.json({ message: "successfully logged in", jwtAccessToken });
+    } catch (err) {}
 };
 
 export const getAllArticles = (req: express.Request, res: express.Response) => {
