@@ -1,0 +1,36 @@
+GET http://localhost:3000/articles
+
+###
+
+POST http://localhost:3000/signin
+Content-Type: application/json
+
+{
+    "username" : "PKD_01",
+    "password": "ddPkd"
+}
+
+###
+
+POST http://localhost:3000/articles
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2MTk1NTA1NTYsImV4cCI6MTYxOTU1MDYxNn0.AWB-7O9jQoOIHMWVBLEsNxf08GQ8qpfC9FEhmSgFccs
+Content-Type: application/json
+
+{
+    "username":"PKD_01",
+    "author":"Amina Adewusi"
+}
+
+###
+
+POST http://localhost:3000/signInUser
+
+###
+
+POST http://localhost:3000/signUpUser
+Content-Type: application/json
+
+{
+    "username":"dalmia01",
+    "password":"dalmia_01"
+}
